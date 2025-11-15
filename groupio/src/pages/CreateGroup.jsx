@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGroups } from '../context/GroupsContext';
 import Navbar from '../components/Navbar';
-import './CreateGroup.css';
 
 const CreateGroup = () => {
   const navigate = useNavigate();
@@ -47,19 +46,25 @@ const CreateGroup = () => {
   ];
 
   return (
-    <div className="page-container">
+    <div className="min-h-screen bg-bg-primary">
       <Navbar />
 
-      <div className="create-group-container">
-        <div className="create-group-card">
-          <h1>Create a New Group</h1>
-          <p className="subtitle">Build a community around your interests</p>
+      <div className="max-w-3xl mx-auto px-5 py-6">
+        <div className="bg-white rounded-lg p-8 shadow-sm">
+          <h1 className="text-3xl text-text-primary font-bold mb-2">Create a New Group</h1>
+          <p className="text-text-secondary mb-8">Build a community around your interests</p>
 
-          <form onSubmit={handleSubmit} className="create-group-form">
-            {error && <div className="error-message">{error}</div>}
+          <form onSubmit={handleSubmit}>
+            {error && (
+              <div className="bg-red-50 text-red-600 p-3 rounded-md mb-4 border border-red-200">
+                {error}
+              </div>
+            )}
 
-            <div className="form-group">
-              <label htmlFor="name">Group Name *</label>
+            <div className="mb-6">
+              <label htmlFor="name" className="block mb-2 text-text-primary font-semibold text-base">
+                Group Name *
+              </label>
               <input
                 type="text"
                 id="name"
@@ -68,11 +73,14 @@ const CreateGroup = () => {
                 onChange={handleChange}
                 placeholder="e.g., Photography Enthusiasts"
                 maxLength={100}
+                className="w-full px-3 py-3 border border-gray-300 rounded-md text-base focus:outline-none focus:border-primary transition-colors"
               />
             </div>
 
-            <div className="form-group">
-              <label htmlFor="description">Description *</label>
+            <div className="mb-6">
+              <label htmlFor="description" className="block mb-2 text-text-primary font-semibold text-base">
+                Description *
+              </label>
               <textarea
                 id="description"
                 name="description"
@@ -81,49 +89,58 @@ const CreateGroup = () => {
                 placeholder="Tell people what your group is about..."
                 rows={4}
                 maxLength={500}
+                className="w-full px-3 py-3 border border-gray-300 rounded-md text-base resize-y min-h-[100px] focus:outline-none focus:border-primary transition-colors"
               />
             </div>
 
-            <div className="form-group">
-              <label htmlFor="privacy">Privacy</label>
+            <div className="mb-6">
+              <label htmlFor="privacy" className="block mb-2 text-text-primary font-semibold text-base">
+                Privacy
+              </label>
               <select
                 id="privacy"
                 name="privacy"
                 value={formData.privacy}
                 onChange={handleChange}
+                className="w-full px-3 py-3 border border-gray-300 rounded-md text-base focus:outline-none focus:border-primary transition-colors"
               >
                 <option value="public">Public - Anyone can join</option>
                 <option value="private">Private - Invite only</option>
               </select>
             </div>
 
-            <div className="form-group">
-              <label>Cover Image</label>
-              <div className="cover-image-preview">
-                <img src={formData.coverImage} alt="Cover preview" />
+            <div className="mb-6">
+              <label className="block mb-2 text-text-primary font-semibold text-base">Cover Image</label>
+              <div className="w-full h-52 rounded-lg overflow-hidden mb-3">
+                <img src={formData.coverImage} alt="Cover preview" className="w-full h-full object-cover" />
               </div>
-              <div className="cover-image-options">
+              <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
                 {coverImageOptions.map((image, index) => (
                   <img
                     key={index}
                     src={image}
                     alt={`Option ${index + 1}`}
-                    className={formData.coverImage === image ? 'selected' : ''}
+                    className={`w-full h-16 object-cover rounded cursor-pointer border-2 transition-all ${
+                      formData.coverImage === image ? 'border-primary' : 'border-transparent hover:opacity-80'
+                    }`}
                     onClick={() => setFormData(prev => ({ ...prev, coverImage: image }))}
                   />
                 ))}
               </div>
             </div>
 
-            <div className="form-actions">
+            <div className="flex flex-col-reverse sm:flex-row gap-3 justify-end mt-8">
               <button
                 type="button"
-                className="btn btn-secondary"
+                className="bg-secondary text-gray-900 py-2.5 px-5 rounded-md text-base font-semibold hover:bg-secondary-hover transition-colors"
                 onClick={() => navigate('/')}
               >
                 Cancel
               </button>
-              <button type="submit" className="btn btn-primary">
+              <button
+                type="submit"
+                className="bg-primary text-white py-2.5 px-5 rounded-md text-base font-semibold hover:bg-primary-hover transition-colors"
+              >
                 Create Group
               </button>
             </div>

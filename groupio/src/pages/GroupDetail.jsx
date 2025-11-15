@@ -5,7 +5,6 @@ import { useAuth } from '../context/AuthContext';
 import Navbar from '../components/Navbar';
 import Post from '../components/Post';
 import CreatePost from '../components/CreatePost';
-import './GroupDetail.css';
 
 const GroupDetail = () => {
   const { groupId } = useParams();
@@ -35,25 +34,25 @@ const GroupDetail = () => {
   };
 
   if (!group) {
-    return <div>Loading...</div>;
+    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
   }
 
   const isMember = group.members.includes(currentUser.id);
   const isAdmin = group.admins.includes(currentUser.id);
 
   return (
-    <div className="page-container">
+    <div className="min-h-screen bg-bg-primary">
       <Navbar />
 
-      <div className="group-detail-container">
-        <div className="group-header">
+      <div className="max-w-4xl mx-auto">
+        <div className="bg-white rounded-lg overflow-hidden my-6 mx-5 shadow-sm">
           <div
-            className="group-cover"
+            className="h-80 bg-cover bg-center relative"
             style={{ backgroundImage: `url(${group.coverImage})` }}
           >
-            <div className="group-cover-overlay">
-              <h1>{group.name}</h1>
-              <div className="group-meta">
+            <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/70 to-transparent text-white">
+              <h1 className="text-4xl mb-2 font-bold drop-shadow-md">{group.name}</h1>
+              <div className="flex items-center gap-2 text-sm opacity-90">
                 <span>{group.privacy === 'public' ? 'Public' : 'Private'} Group</span>
                 <span>•</span>
                 <span>{group.members.length} members</span>
@@ -61,10 +60,14 @@ const GroupDetail = () => {
             </div>
           </div>
 
-          <div className="group-actions">
-            <p className="group-description">{group.description}</p>
+          <div className="p-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-5">
+            <p className="text-text-secondary flex-1">{group.description}</p>
             <button
-              className={`btn ${isMember ? 'btn-secondary' : 'btn-primary'}`}
+              className={`${
+                isMember
+                  ? 'bg-secondary text-gray-900 hover:bg-secondary-hover'
+                  : 'bg-primary text-white hover:bg-primary-hover'
+              } py-2.5 px-5 rounded-md text-base font-semibold transition-colors whitespace-nowrap`}
               onClick={handleJoinLeave}
             >
               {isMember ? 'Leave Group' : 'Join Group'}
@@ -73,15 +76,15 @@ const GroupDetail = () => {
         </div>
 
         {isMember && (
-          <div className="group-content">
-            <div className="create-post-trigger">
+          <div className="mx-5">
+            <div className="bg-white rounded-lg p-4 flex items-center gap-3 mb-5 shadow-sm">
               <img
                 src={currentUser.avatar}
                 alt={currentUser.name}
-                className="avatar-small"
+                className="w-9 h-9 rounded-full object-cover"
               />
               <button
-                className="post-input-trigger"
+                className="flex-1 bg-bg-primary border-none rounded-full py-3 px-4 text-left text-text-secondary cursor-pointer text-base hover:bg-secondary transition-colors"
                 onClick={() => setShowCreatePost(true)}
               >
                 What's on your mind, {currentUser.name.split(' ')[0]}?
@@ -99,7 +102,7 @@ const GroupDetail = () => {
               />
             )}
 
-            <div className="posts-feed">
+            <div className="flex flex-col gap-4 mb-6">
               {group.posts && group.posts.length > 0 ? (
                 group.posts.map(post => (
                   <Post
@@ -110,9 +113,9 @@ const GroupDetail = () => {
                   />
                 ))
               ) : (
-                <div className="empty-state">
-                  <h3>No posts yet</h3>
-                  <p>Be the first to share something with this group!</p>
+                <div className="text-center py-16 px-5 bg-white rounded-lg">
+                  <h3 className="text-text-primary mb-2 text-xl font-semibold">No posts yet</h3>
+                  <p className="text-text-secondary">Be the first to share something with this group!</p>
                 </div>
               )}
             </div>
@@ -120,9 +123,14 @@ const GroupDetail = () => {
         )}
 
         {!isMember && (
-          <div className="join-prompt">
-            <h3>Join this group to see posts and participate</h3>
-            <button className="btn btn-primary" onClick={handleJoinLeave}>
+          <div className="bg-white rounded-lg py-16 px-5 text-center my-6 mx-5 shadow-sm">
+            <h3 className="text-text-primary mb-4 text-xl font-semibold">
+              Join this group to see posts and participate
+            </h3>
+            <button
+              className="bg-primary text-white py-2.5 px-5 rounded-md text-base font-semibold hover:bg-primary-hover transition-colors"
+              onClick={handleJoinLeave}
+            >
               Join Group
             </button>
           </div>

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import './Auth.css';
 
 const Register = () => {
   const [name, setName] = useState('');
@@ -40,68 +39,90 @@ const Register = () => {
   };
 
   return (
-    <div className="auth-container">
-      <div className="auth-card">
-        <div className="auth-header">
-          <h1 className="logo">Groupio</h1>
-          <p>Join communities and connect with people</p>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-600 to-purple-800 p-5">
+      <div className="bg-white rounded-xl shadow-2xl max-w-md w-full overflow-hidden">
+        <div className="bg-gradient-to-br from-purple-600 to-purple-800 text-white py-10 px-5 text-center">
+          <h1 className="text-5xl font-bold mb-2 tracking-tight">Groupio</h1>
+          <p className="text-purple-100">Join communities and connect with people</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="auth-form">
-          <h2>Create your account</h2>
+        <form onSubmit={handleSubmit} className="p-8">
+          <h2 className="mb-6 text-text-primary text-2xl font-semibold">Create your account</h2>
 
-          {error && <div className="error-message">{error}</div>}
+          {error && (
+            <div className="bg-red-50 text-red-600 p-3 rounded-md mb-4 border border-red-200">
+              {error}
+            </div>
+          )}
 
-          <div className="form-group">
-            <label htmlFor="name">Full Name</label>
+          <div className="mb-5">
+            <label htmlFor="name" className="block mb-2 text-text-primary font-semibold text-sm">
+              Full Name
+            </label>
             <input
               type="text"
               id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Enter your full name"
+              className="w-full px-3 py-3 border border-gray-300 rounded-md text-base focus:outline-none focus:border-primary transition-colors"
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
+          <div className="mb-5">
+            <label htmlFor="email" className="block mb-2 text-text-primary font-semibold text-sm">
+              Email
+            </label>
             <input
               type="email"
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
+              className="w-full px-3 py-3 border border-gray-300 rounded-md text-base focus:outline-none focus:border-primary transition-colors"
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
+          <div className="mb-5">
+            <label htmlFor="password" className="block mb-2 text-text-primary font-semibold text-sm">
+              Password
+            </label>
             <input
               type="password"
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
+              className="w-full px-3 py-3 border border-gray-300 rounded-md text-base focus:outline-none focus:border-primary transition-colors"
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="confirmPassword">Confirm Password</label>
+          <div className="mb-5">
+            <label htmlFor="confirmPassword" className="block mb-2 text-text-primary font-semibold text-sm">
+              Confirm Password
+            </label>
             <input
               type="password"
               id="confirmPassword"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Confirm your password"
+              className="w-full px-3 py-3 border border-gray-300 rounded-md text-base focus:outline-none focus:border-primary transition-colors"
             />
           </div>
 
-          <button type="submit" className="btn btn-primary btn-block">
+          <button
+            type="submit"
+            className="w-full bg-primary text-white py-2.5 px-5 rounded-md text-base font-semibold hover:bg-primary-hover transition-colors"
+          >
             Register
           </button>
 
-          <p className="auth-footer">
-            Already have an account? <Link to="/login">Login here</Link>
+          <p className="mt-5 text-center text-text-secondary text-sm">
+            Already have an account?{' '}
+            <Link to="/login" className="text-primary font-semibold hover:underline">
+              Login here
+            </Link>
           </p>
         </form>
       </div>

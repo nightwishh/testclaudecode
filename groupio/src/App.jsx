@@ -6,13 +6,12 @@ import Register from './pages/Register';
 import Home from './pages/Home';
 import GroupDetail from './pages/GroupDetail';
 import CreateGroup from './pages/CreateGroup';
-import './App.css';
 
 const PrivateRoute = ({ children }) => {
   const { currentUser, loading } = useAuth();
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
   }
 
   return currentUser ? children : <Navigate to="/login" />;
@@ -22,7 +21,7 @@ const PublicRoute = ({ children }) => {
   const { currentUser, loading } = useAuth();
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
   }
 
   return !currentUser ? children : <Navigate to="/" />;

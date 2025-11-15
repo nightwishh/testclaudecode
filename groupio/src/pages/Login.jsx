@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import './Auth.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -28,46 +27,62 @@ const Login = () => {
   };
 
   return (
-    <div className="auth-container">
-      <div className="auth-card">
-        <div className="auth-header">
-          <h1 className="logo">Groupio</h1>
-          <p>Connect with communities that matter to you</p>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-600 to-purple-800 p-5">
+      <div className="bg-white rounded-xl shadow-2xl max-w-md w-full overflow-hidden">
+        <div className="bg-gradient-to-br from-purple-600 to-purple-800 text-white py-10 px-5 text-center">
+          <h1 className="text-5xl font-bold mb-2 tracking-tight">Groupio</h1>
+          <p className="text-purple-100">Connect with communities that matter to you</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="auth-form">
-          <h2>Login to your account</h2>
+        <form onSubmit={handleSubmit} className="p-8">
+          <h2 className="mb-6 text-text-primary text-2xl font-semibold">Login to your account</h2>
 
-          {error && <div className="error-message">{error}</div>}
+          {error && (
+            <div className="bg-red-50 text-red-600 p-3 rounded-md mb-4 border border-red-200">
+              {error}
+            </div>
+          )}
 
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
+          <div className="mb-5">
+            <label htmlFor="email" className="block mb-2 text-text-primary font-semibold text-sm">
+              Email
+            </label>
             <input
               type="email"
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
+              className="w-full px-3 py-3 border border-gray-300 rounded-md text-base focus:outline-none focus:border-primary transition-colors"
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
+          <div className="mb-5">
+            <label htmlFor="password" className="block mb-2 text-text-primary font-semibold text-sm">
+              Password
+            </label>
             <input
               type="password"
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
+              className="w-full px-3 py-3 border border-gray-300 rounded-md text-base focus:outline-none focus:border-primary transition-colors"
             />
           </div>
 
-          <button type="submit" className="btn btn-primary btn-block">
+          <button
+            type="submit"
+            className="w-full bg-primary text-white py-2.5 px-5 rounded-md text-base font-semibold hover:bg-primary-hover transition-colors"
+          >
             Login
           </button>
 
-          <p className="auth-footer">
-            Don't have an account? <Link to="/register">Register here</Link>
+          <p className="mt-5 text-center text-text-secondary text-sm">
+            Don't have an account?{' '}
+            <Link to="/register" className="text-primary font-semibold hover:underline">
+              Register here
+            </Link>
           </p>
         </form>
       </div>
